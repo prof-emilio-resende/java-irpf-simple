@@ -1,7 +1,6 @@
 package fit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -73,6 +72,20 @@ public class AppTest
 
         // act
         var actualIrpfValue = IrpfCalculator.calculateIrpf(totalSalary);
+
+        // assert
+        assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
+    }
+
+    @Test
+    public void shouldCalculateIrpfValueWithDependents() {
+        // arrange
+        var totalSalary = 3500.00;
+        var totalDependents = 2;
+        var irpfValueExpected = 62.39;
+
+        // act
+        var actualIrpfValue = IrpfCalculator.calculateIrpf(totalSalary, totalDependents);
 
         // assert
         assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
