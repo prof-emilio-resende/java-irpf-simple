@@ -18,60 +18,40 @@ public class AppTest
     public void shouldCalculateInssWith11Percent()
     {
         // arrange
+        var year = 2021;
         var totalSalary = 3000.00;
         var baseSalaryExpected = 2670.00;
         // act
-        var actualBaseSalary = IrpfCalculator.calculateBaseSalary(totalSalary);
+        var actualBaseSalary = new IrpfCalculator(year, totalSalary, 0).calculateBaseSalary();
         // assert
         assertEquals(baseSalaryExpected, actualBaseSalary, 0.01);
     }
 
     @Test
-    public void shouldCalculateExemptionValue() {
+    public void shouldCalculateTotalDiscountValue() {
         // arrange
-        var exemptionValueExpected = 1903.98;
+        var year = 2021;
+        var totalSalary = 3000.00;
+        var dependents  = 0;
+        var totalDiscountExpected = 2233.98;
 
         // act
-        var actualExemptionValue = IrpfCalculator.calculateExemption();
+        var actualDiscountValue = new IrpfCalculator(year, totalSalary, dependents).calculateDiscount();
 
         // assert
-        assertEquals(exemptionValueExpected, actualExemptionValue, 0.01);
-    }
-
-    @Test
-    public void shouldCalculateDiscountValue() {
-        // arrange
-        var baseSalary  = 2670.00;
-        var discountValueExpected = 766.02;
-
-        // act
-        var actualDiscountValue = IrpfCalculator.calculateDiscount(baseSalary);
-
-        // assert
-        assertEquals(discountValueExpected, actualDiscountValue, 0.01);
-    }
-
-    @Test
-    public void shouldCalculateTaxLayerValue() {
-        // arrange
-        var baseSalary  = 2670.00;
-        var taxLayerExpected = 0.075;
-
-        // act
-        var actualTaxLayex = IrpfCalculator.calculateTaxLayer(baseSalary);
-
-        // assert
-        assertEquals(actualTaxLayex, taxLayerExpected, 0.01);
+        assertEquals(totalDiscountExpected, actualDiscountValue, 0.01);
     }
 
     @Test
     public void shouldCalculateIrpfValue() {
         // arrange
+        var year = 2021;
         var totalSalary = 3000.00;
+        var dependents = 0;
         var irpfValueExpected = 57.45;
 
         // act
-        var actualIrpfValue = IrpfCalculator.calculateIrpf(totalSalary);
+        var actualIrpfValue = new IrpfCalculator(year, totalSalary, dependents).calculate();
 
         // assert
         assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
@@ -80,12 +60,13 @@ public class AppTest
     @Test
     public void shouldCalculateIrpfValueWithDependents() {
         // arrange
+        var year = 2021;
         var totalSalary = 3500.00;
-        var totalDependents = 2;
+        var dependents = 2;
         var irpfValueExpected = 62.39;
 
         // act
-        var actualIrpfValue = IrpfCalculator.calculateIrpf(totalSalary, totalDependents);
+        var actualIrpfValue = new IrpfCalculator(year, totalSalary, dependents).calculate();
 
         // assert
         assertEquals(actualIrpfValue, irpfValueExpected, 0.01);
